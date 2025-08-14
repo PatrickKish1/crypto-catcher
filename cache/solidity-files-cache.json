@@ -1,0 +1,1297 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\CryptoCatcherBlocklock.sol": {
+      "lastModificationDate": 1755115303490,
+      "contentHash": "215257cc5c2830a93a8f27cdab275f87",
+      "sourceName": "contracts/CryptoCatcherBlocklock.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "blocklock-solidity/src/libraries/TypesLib.sol",
+        "blocklock-solidity/src/AbstractBlocklockReceiver.sol",
+        "blocklock-solidity/src/libraries/BLS.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "CryptoCatcherBlocklock"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\AbstractBlocklockReceiver.sol": {
+      "lastModificationDate": 1755107661513,
+      "contentHash": "bd1d7ecd6c0712c5d407bfde3f6f09df",
+      "sourceName": "blocklock-solidity/src/AbstractBlocklockReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IBlocklockReceiver.sol",
+        "./interfaces/IBlocklockSender.sol",
+        "./access/ConfirmedOwner.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "AbstractBlocklockReceiver"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\libraries\\BLS.sol": {
+      "lastModificationDate": 1755107662088,
+      "contentHash": "8ee4d432059d77a558cad9111ee3fe81",
+      "sourceName": "blocklock-solidity/src/libraries/BLS.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ModExp.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "BLS"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\libraries\\TypesLib.sol": {
+      "lastModificationDate": 1755107666253,
+      "contentHash": "22479b9a8e4f49ce32f97e5fb916031b",
+      "sourceName": "blocklock-solidity/src/libraries/TypesLib.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./BLS.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "TypesLib"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\access\\ConfirmedOwner.sol": {
+      "lastModificationDate": 1755107662243,
+      "contentHash": "6b00df07c1d4647ddeeaa056beedc00e",
+      "sourceName": "blocklock-solidity/src/access/ConfirmedOwner.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ConfirmedOwnerWithProposal.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ConfirmedOwner"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\interfaces\\IBlocklockReceiver.sol": {
+      "lastModificationDate": 1755107664251,
+      "contentHash": "a0401d06f5aaa6c619c6f1e00f9bbe31",
+      "sourceName": "blocklock-solidity/src/interfaces/IBlocklockReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IBlocklockReceiver"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\interfaces\\IBlocklockSender.sol": {
+      "lastModificationDate": 1755107664261,
+      "contentHash": "5e8898ba0d0704fbc4ff6eac8c3bacf3",
+      "sourceName": "blocklock-solidity/src/interfaces/IBlocklockSender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/TypesLib.sol",
+        "./ISubscription.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IBlocklockSender"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\access\\ConfirmedOwnerWithProposal.sol": {
+      "lastModificationDate": 1755107662248,
+      "contentHash": "1b6acd09a7df85da300774db271f55b5",
+      "sourceName": "blocklock-solidity/src/access/ConfirmedOwnerWithProposal.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IOwnable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ConfirmedOwnerWithProposal"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\interfaces\\IOwnable.sol": {
+      "lastModificationDate": 1755107664859,
+      "contentHash": "c381d0ab8b97a2b25a7bbc6ad11445af",
+      "sourceName": "blocklock-solidity/src/interfaces/IOwnable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IOwnable"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\interfaces\\ISubscription.sol": {
+      "lastModificationDate": 1755107664874,
+      "contentHash": "fae7a482c17bda4155834faf62f2e9d8",
+      "sourceName": "blocklock-solidity/src/interfaces/ISubscription.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ISubscription"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\blocklock-solidity\\src\\libraries\\ModExp.sol": {
+      "lastModificationDate": 1755107665041,
+      "contentHash": "329aa110c9c1342f7523530a01a04846",
+      "sourceName": "blocklock-solidity/src/libraries/ModExp.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ModUtils",
+        "ModexpInverse",
+        "ModexpSqrt"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\EnhancedGameClaims.sol": {
+      "lastModificationDate": 1755114463053,
+      "contentHash": "fc0af1c946511ad289a06a48d0a7e487",
+      "sourceName": "contracts/EnhancedGameClaims.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+        "./CryptoCatcherBlocklock.sol",
+        "./UserManager.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "EnhancedGameClaims"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\UserManager.sol": {
+      "lastModificationDate": 1755111279330,
+      "contentHash": "909546f8837aa19a0feb11db86e0144c",
+      "sourceName": "contracts/UserManager.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/access/Ownable.sol",
+        "@openzeppelin/contracts/utils/ReentrancyGuard.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "UserManager"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\utils\\ReentrancyGuard.sol": {
+      "lastModificationDate": 1755109114137,
+      "contentHash": "190613e556d509d9e9a0ea43dc5d891d",
+      "sourceName": "@openzeppelin/contracts/utils/ReentrancyGuard.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ReentrancyGuard"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\access\\Ownable.sol": {
+      "lastModificationDate": 1755109113980,
+      "contentHash": "d3c790edc9ccf808a17c5a6cd13614fd",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\IERC20.sol": {
+      "lastModificationDate": 1755109113739,
+      "contentHash": "9261adf6457863de3e9892f51317ec89",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.4.16"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\utils\\Context.sol": {
+      "lastModificationDate": 1755109112857,
+      "contentHash": "67bfbc07588eb8683b3fd8f6f909563e",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\extensions\\IERC20Metadata.sol": {
+      "lastModificationDate": 1755109113746,
+      "contentHash": "513778b30d2750f5d2b9b19bbcf748a5",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.2"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\token\\ERC20\\ERC20.sol": {
+      "lastModificationDate": 1755109113172,
+      "contentHash": "59dfce11284f2636db261df9b6a18f81",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./extensions/IERC20Metadata.sol",
+        "../../utils/Context.sol",
+        "../../interfaces/draft-IERC6093.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\@openzeppelin\\contracts\\interfaces\\draft-IERC6093.sol": {
+      "lastModificationDate": 1755109113008,
+      "contentHash": "5041977bbe908de2e6ed0270447f79ad",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC6093.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.8.4"
+      ],
+      "artifacts": [
+        "IERC1155Errors",
+        "IERC20Errors",
+        "IERC721Errors"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\MockERC20.sol": {
+      "lastModificationDate": 1755111287515,
+      "contentHash": "7f05a13ef8eb4032a40dfb3d8b86246f",
+      "sourceName": "contracts/MockERC20.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "MockERC20"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\GameClaims.sol": {
+      "lastModificationDate": 1755111294001,
+      "contentHash": "98ead2ac8facdb2895c8a17ec95f9bf0",
+      "sourceName": "contracts/GameClaims.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "GameClaims"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\CryptoCatcherRandomness.sol": {
+      "lastModificationDate": 1755111313011,
+      "contentHash": "78049bf962983fc5bf651c76520731fb",
+      "sourceName": "contracts/CryptoCatcherRandomness.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "randomness-solidity/src/RandomnessReceiverBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "CryptoCatcherRandomness"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\RandomnessReceiverBase.sol": {
+      "lastModificationDate": 1755109152760,
+      "contentHash": "72e8cfe11207e39a09c870604b2c673c",
+      "sourceName": "randomness-solidity/src/RandomnessReceiverBase.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./interfaces/IRandomnessReceiver.sol",
+        "./interfaces/IRandomnessSender.sol",
+        "./access/ConfirmedOwner.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "RandomnessReceiverBase"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\access\\ConfirmedOwner.sol": {
+      "lastModificationDate": 1755109144536,
+      "contentHash": "6b00df07c1d4647ddeeaa056beedc00e",
+      "sourceName": "randomness-solidity/src/access/ConfirmedOwner.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ConfirmedOwnerWithProposal.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ConfirmedOwner"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\interfaces\\IRandomnessSender.sol": {
+      "lastModificationDate": 1755109149440,
+      "contentHash": "cd6ee8a460739270622dea28a6e9efa9",
+      "sourceName": "randomness-solidity/src/interfaces/IRandomnessSender.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/TypesLib.sol",
+        "./ISubscription.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IRandomnessSender"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\interfaces\\IRandomnessReceiver.sol": {
+      "lastModificationDate": 1755109149435,
+      "contentHash": "797d55c5a20bfea56964bf978a7781ad",
+      "sourceName": "randomness-solidity/src/interfaces/IRandomnessReceiver.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IRandomnessReceiver"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\access\\ConfirmedOwnerWithProposal.sol": {
+      "lastModificationDate": 1755109144550,
+      "contentHash": "1b6acd09a7df85da300774db271f55b5",
+      "sourceName": "randomness-solidity/src/access/ConfirmedOwnerWithProposal.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IOwnable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ConfirmedOwnerWithProposal"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\interfaces\\IOwnable.sol": {
+      "lastModificationDate": 1755109149402,
+      "contentHash": "c381d0ab8b97a2b25a7bbc6ad11445af",
+      "sourceName": "randomness-solidity/src/interfaces/IOwnable.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "IOwnable"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\libraries\\TypesLib.sol": {
+      "lastModificationDate": 1755109154596,
+      "contentHash": "626d7d132a3740894eba4c4914283fec",
+      "sourceName": "randomness-solidity/src/libraries/TypesLib.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./BLS.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "TypesLib"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\interfaces\\ISubscription.sol": {
+      "lastModificationDate": 1755109149529,
+      "contentHash": "fae7a482c17bda4155834faf62f2e9d8",
+      "sourceName": "randomness-solidity/src/interfaces/ISubscription.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ISubscription"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\libraries\\BLS.sol": {
+      "lastModificationDate": 1755109143411,
+      "contentHash": "1117bb145c10beef8226a66cb9fd410a",
+      "sourceName": "randomness-solidity/src/libraries/BLS.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ModExp.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "BLS"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\node_modules\\randomness-solidity\\src\\libraries\\ModExp.sol": {
+      "lastModificationDate": 1755109150511,
+      "contentHash": "553741d1f7408dc284c2650fa4110fe1",
+      "sourceName": "randomness-solidity/src/libraries/ModExp.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "ModUtils",
+        "ModexpInverse",
+        "ModexpSqrt"
+      ]
+    },
+    "C:\\Users\\patri\\Documents\\HACKATHONS\\PERSONAL\\BOOTCAMP\\vrf\\contracts\\RandomNumberGenerator.sol": {
+      "lastModificationDate": 1755090127690,
+      "contentHash": "49bdd34b6c2a584dcfcf9e3c56221242",
+      "sourceName": "contracts/RandomNumberGenerator.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "randomness-solidity/src/RandomnessReceiverBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.8"
+      ],
+      "artifacts": [
+        "MockRandomnessReceiver"
+      ]
+    }
+  }
+}
