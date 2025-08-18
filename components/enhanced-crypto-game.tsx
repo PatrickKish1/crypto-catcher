@@ -9,9 +9,8 @@ import { tokens, difficultyLevels, type Token } from "@/lib/lib/config/token"
 import { saveTokenScore, getTokenScores } from "@/lib/lib/cookies"
 import { toast } from "sonner"
 
-// Contract configuration - Base Sepolia  
 import { ENHANCED_CONTRACTS } from '@/lib/enhanced-contracts'
-const RANDOMNESS_CONTRACT_ADDRESS = ENHANCED_CONTRACTS.RANDOMNESS as const
+const RANDOMNESS_CONTRACT_ADDRESS = ENHANCED_CONTRACTS.RANDOMNESS
 const RANDOMNESS_CONTRACT_ABI = [
   {
     "inputs": [
@@ -74,7 +73,7 @@ interface UserProfile {
 
 const EnhancedCryptoGame = () => {
   const { isConnected, address } = useAccount()
-  const { theme } = "next-themes"
+  const { theme } = useTheme()
   
   // Game state
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -90,7 +89,7 @@ const EnhancedCryptoGame = () => {
   const [tokenScores, setTokenScores] = useState(getTokenScores())
   
   // Enhanced features
-  const [gameMode, setGameMode] = useState<'CLASSIC' | 'VRF_ENHANCED'>('CLASSIC')
+  const [gameMode, setGameMode] = useState<'CLASSIC' | 'VRF_ENHANCED'>('VRF_ENHANCED')
   const [currentSession, setCurrentSession] = useState<GameSession | null>(null)
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
   const [isCreatingSession, setIsCreatingSession] = useState(false)
@@ -238,7 +237,7 @@ const EnhancedCryptoGame = () => {
     const drawWallet = () => {
       if (!ctx) return
       const walletImg = new Image()
-      walletImg.src = '/images/wallet.svg'
+      walletImg.src = '/assets/images/wallet.svg'
       ctx.drawImage(walletImg, gameState.walletX, canvas.height - 80, 80, 80)
     }
 
@@ -597,11 +596,11 @@ const EnhancedCryptoGame = () => {
       <div className="mb-4 flex gap-6">
         <div className="text-xl font-bold">Score: {score}</div>
         <div className="text-xl font-bold">High Score: {highScore}</div>
-        {gameMode === 'VRF_ENHANCED' && currentSession && (
-          <div className="text-xl font-bold text-purple-600">
-            🎯 VRF Multiplier: {currentSession.vrfMultiplier / 100}x
-          </div>
-        )}
+                 {currentSession && (
+           <div className="text-xl font-bold text-purple-600">
+             🎯 VRF Multiplier: {currentSession.vrfMultiplier / 100}x
+           </div>
+         )}
       </div>
       
       <div className="mb-4 flex gap-4 text-sm">
@@ -639,11 +638,11 @@ const EnhancedCryptoGame = () => {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-lg">
             <div className="text-3xl font-bold text-white mb-4">Game Over!</div>
             <div className="text-xl text-white mb-2">Final Score: {score}</div>
-            {gameMode === 'VRF_ENHANCED' && currentSession && (
-              <div className="text-lg text-purple-300 mb-4">
-                🎯 VRF Enhanced Session Complete!
-              </div>
-            )}
+                         {currentSession && (
+               <div className="text-lg text-purple-300 mb-4">
+                 🎯 VRF Enhanced Session Complete!
+               </div>
+             )}
             <button
               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-lg font-medium"
               onClick={resetGame}
@@ -655,25 +654,21 @@ const EnhancedCryptoGame = () => {
 
         {!gameStarted && !gameOver && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 rounded-lg">
-            <div className="text-2xl font-bold text-white mb-6">
-              {gameMode === 'VRF_ENHANCED' ? '🎯 VRF Enhanced Crypto Catcher' : 'Crypto Catcher'}
-            </div>
-            <div className="text-white mb-6 max-w-md text-center">
-              <p className="mb-2">Catch the falling crypto tokens with your wallet!</p>
-              <p className="mb-2">Use arrow keys or touch to move.</p>
-              {gameMode === 'VRF_ENHANCED' ? (
-                <p className="text-purple-300">🎯 VRF mode: Random level changes for ultimate challenge!</p>
-              ) : (
-                <p className="text-red-400">{`Avoid red tokens or it's game over!`}</p>
-              )}
-            </div>
-            <button
-              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-lg font-medium"
-              onClick={() => setGameStarted(true)}
-              disabled={gameMode === 'VRF_ENHANCED' && !currentSession}
-            >
-              {gameMode === 'VRF_ENHANCED' && !currentSession ? 'Create VRF Session First' : 'Start Game'}
-            </button>
+                         <div className="text-2xl font-bold text-white mb-6">
+               🎯 VRF Enhanced Crypto Catcher
+             </div>
+                         <div className="text-white mb-6 max-w-md text-center">
+               <p className="mb-2">Catch the falling crypto tokens with your wallet!</p>
+               <p className="mb-2">Use arrow keys or touch to move.</p>
+               <p className="text-purple-300">🎯 VRF mode: Random level changes for ultimate challenge!</p>
+             </div>
+                         <button
+               className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-lg font-medium"
+               onClick={() => setGameStarted(true)}
+               disabled={!currentSession}
+             >
+               {!currentSession ? 'Create VRF Session First' : 'Start Game'}
+             </button>
           </div>
         )}
       </div>
@@ -701,14 +696,14 @@ const EnhancedCryptoGame = () => {
         </div>
       )}
 
-      <div className="mt-4 text-sm text-muted-foreground">
-        Controls: Arrow keys or touch to move the wallet
-        {gameMode === 'VRF_ENHANCED' && currentSession && (
-          <div className="mt-2 text-purple-600">
-            🎯 VRF Enhanced: Level changes triggered by verifiable randomness!
-          </div>
-        )}
-      </div>
+             <div className="mt-4 text-sm text-muted-foreground">
+         Controls: Arrow keys or touch to move the wallet
+         {currentSession && (
+           <div className="mt-2 text-purple-600">
+             🎯 VRF Enhanced: Level changes triggered by verifiable randomness!
+           </div>
+         )}
+       </div>
     </div>
   )
 }

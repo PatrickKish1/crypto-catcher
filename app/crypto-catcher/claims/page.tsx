@@ -2,7 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { getTokenScores, type TokenScore } from '@/lib/lib/cookies'
+import { getTokenScores, type TokenScores } from '@/lib/lib/cookies'
 import { tokens } from '@/lib/lib/config/token'
 import TokenSwap from '@/components/token-swap'
 import Image from 'next/image'
@@ -28,7 +28,7 @@ type ClaimHistory = {
 }
 
 export default function ClaimsPage() {
-  const [scores, setScores] = useState<TokenScore>(getTokenScores())
+  const [scores, setScores] = useState<TokenScores>(getTokenScores())
   const [selectedToken, setSelectedToken] = useState<string>('total')
   const [claimHistory, setClaimHistory] = useState<ClaimHistory[]>([])
   const { address, isConnected } = useAccount()
@@ -97,7 +97,7 @@ export default function ClaimsPage() {
     }
   }
 
-  const currentPoints = selectedToken === 'total' ? scores.total : scores[selectedToken as keyof TokenScore]
+  const currentPoints = selectedToken === 'total' ? scores.total : scores[selectedToken as keyof TokenScores]
   const usdcValue = calculateClaimAmount(currentPoints);
 
   const getExplorerUrl = (txHash: string) => {
@@ -145,7 +145,7 @@ export default function ClaimsPage() {
                   </div>
                   <div className="text-center">
                     <div className="font-bold">{token.symbol}</div>
-                    <div>{scores[token.symbol as keyof TokenScore]} points</div>
+                    <div>{scores[token.symbol as keyof TokenScores]} points</div>
                   </div>
                 </button>
               ))}

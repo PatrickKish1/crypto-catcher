@@ -5,7 +5,9 @@ import EnhancedCryptoGame from '@/components/enhanced-crypto-game';
 import LoadingSpinner from '@/components/loader-spinner';
 import Link from 'next/link';
 import { useAccount } from 'wagmi';
-import { ConnectWallet } from '@/components/walletConnect';
+import { WalletConnect } from '@/components/walletConnect';
+import Header from './header';
+
 
 export default function EnhancedGamePage() {
   const { isConnected } = useAccount();
@@ -14,17 +16,10 @@ export default function EnhancedGamePage() {
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-4">🎮 Enhanced Crypto Catcher</h1>
-          <div className="flex items-center gap-6 text-sm text-gray-600 dark:text-gray-400">
-            <Link href="/" className="hover:text-blue-500">← Home</Link>
-            <Link href="/crypto-catcher" className="hover:text-blue-500">Classic Mode</Link>
-            <Link href="/crypto-catcher/claims" className="hover:text-blue-500">Claims</Link>
-          </div>
-        </div>
+        <Header />
 
         {/* Feature Highlights */}
-        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
           <div className="bg-purple-100 dark:bg-purple-900 rounded-lg p-4">
             <h3 className="font-bold text-lg mb-2">🎲 VRF Randomness</h3>
             <p className="text-sm">Unpredictable level changes powered by verifiable random functions</p>
@@ -47,7 +42,7 @@ export default function EnhancedGamePage() {
               Enhanced Crypto Catcher requires wallet connection to access VRF randomness, 
               sealed sessions, and blockchain-based rewards.
             </p>
-            <ConnectWallet />
+            <WalletConnect />
           </div>
         )}
 

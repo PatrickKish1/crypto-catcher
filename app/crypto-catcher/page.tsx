@@ -4,14 +4,15 @@ import { Suspense } from 'react';
 import CryptoGame from '@/components/crypto-game';
 import LoadingSpinner from '@/components/loader-spinner';
 import Link from 'next/link';
+import Header from '../crypto-catcher-enhanced/header';
 
 export default function GamePage() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Crypto Catcher Game</h1>
+        <Header />
         
-        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 shadow-md">
+        <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 shadow-md mt-10">
           <div className="flex justify-between items-center mb-6">
             <p className="text-gray-600 dark:text-gray-400">
               Welcome to Crypto Catcher! Control your wallet to collect Bitcoin tokens while avoiding obstacles.

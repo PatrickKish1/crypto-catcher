@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { ConnectWallet } from '@/components/walletConnect';
+import { WalletConnect } from '@/components/walletConnect';
 import { useAccount } from 'wagmi';
 
 export default function EnhancedHeader() {
@@ -21,12 +21,12 @@ export default function EnhancedHeader() {
               height={40}
             />
             <div>
-              <h1 className="text-2xl font-bold">Enhanced Crypto Catcher</h1>
+              <h1 className="text-2xl font-bold">Crypto Catcher</h1>
               <p className="text-sm opacity-90">Powered by VRF + Blocklock</p>
             </div>
           </Link>
 
-          <ConnectWallet />
+          <WalletConnect />
         </div>
 
         {/* Navigation */}
