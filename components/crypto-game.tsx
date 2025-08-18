@@ -214,7 +214,7 @@ const CryptoGame = () => {
       canvas.removeEventListener("touchmove", handleTouchMove)
       cancelAnimationFrame(gameState.animationFrameId)
     }
-  }, [gameStarted, isPaused, difficulty.speed, difficulty.spawnRate, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores])
+  }, [gameStarted, isPaused, difficulty.speed, difficulty.spawnRate, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, difficulty.name])
 
   const resetGame = () => {
     setGameOver(false)

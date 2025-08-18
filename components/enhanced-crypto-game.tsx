@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -445,7 +446,7 @@ const EnhancedCryptoGame = () => {
       canvas.removeEventListener("touchmove", handleTouchMove)
       cancelAnimationFrame(gameState.animationFrameId)
     }
-  }, [gameStarted, isPaused, difficulty.speed, difficulty.spawnRate, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, gameMode, currentSession, nextLevelThreshold, currentGameLevel, levelChangeEffect])
+  }, [gameStarted, isPaused, difficulty.speed, difficulty.spawnRate, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, gameMode, currentSession, nextLevelThreshold, currentGameLevel, levelChangeEffect, difficulty.name])
 
   const resetGame = () => {
     setGameOver(false)

@@ -21,7 +21,6 @@ const queryClient = new QueryClient();
 const config = getDefaultConfig({
     appName: 'Randamu',
     projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!,
-    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     chains: [baseSepolia],
     ssr: true, // If your dApp uses server side rendering (SSR),
     transports: {
