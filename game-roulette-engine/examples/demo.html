@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 Game Roulette Engine Demo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .game-container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        .controls {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .timer {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .instructions {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #ffd700;
+        }
+        
+        .key {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 0 5px;
+        }
+        
+        .loading {
+            display: none;
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .game-switch-notice {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎰 Game Roulette Engine</h1>
+        <p class="subtitle">Experience random game switching every minute!</p>
+        
+        <div class="controls">
+            <button id="startBtn" class="btn">🚀 Start Roulette</button>
+            <button id="stopBtn" class="btn" disabled>⏹️ Stop</button>
+            <button id="switchBtn" class="btn" disabled>🎲 Switch Game</button>
+            <button id="pauseBtn" class="btn" disabled>⏸️ Pause</button>
+            <button id="resumeBtn" class="btn" disabled>▶️ Resume</button>
+        </div>
+        
+        <div class="timer" id="timer">60s</div>
+        
+        <div class="game-switch-notice" id="switchNotice" style="display: none;">
+            🎲 Switching to a new game in <span id="switchCountdown">5</span> seconds!
+        </div>
+        
+        <div class="game-container" id="gameContainer">
+            <p>Click "Start Roulette" to begin your gaming adventure!</p>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="totalGames">0</div>
+                <div class="stat-label">Games Available</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="gamesPlayed">0</div>
+                <div class="stat-label">Games Played</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalScore">0</div>
+                <div class="stat-label">Total Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="sessionTime">0s</div>
+                <div class="stat-label">Session Time</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>🎮 How to Play</h3>
+            <p><strong>Snake Game:</strong> Use <span class="key">↑↓←→</span> or <span class="key">WASD</span> to control the snake. Eat the red food to grow and earn points!</p>
+            <p><strong>Game Switching:</strong> Every 60 seconds, the engine will automatically switch to a random game, saving your progress!</p>
+            <p><strong>State Persistence:</strong> Your game state is automatically saved and restored when you return to a game.</p>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>Loading Game Roulette Engine...</p>
+        </div>
+    </div>
+
+    <script type="module">
+        // Import the Game Roulette Engine and Snake Game
+        import { GameRouletteEngine } from '../src/core/GameRouletteEngine.js';
+        import { SnakeGame } from '../src/games/snake/SnakeGame.js';
+        
+        // DOM elements
+        const startBtn = document.getElementById('startBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const switchBtn = document.getElementById('switchBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
+        const gameContainer = document.getElementById('gameContainer');
+        const timer = document.getElementById('timer');
+        const switchNotice = document.getElementById('switchNotice');
+        const switchCountdown = document.getElementById('switchCountdown');
+        const loading = document.getElementById('loading');
+        
+        // Stats elements
+        const totalGamesEl = document.getElementById('totalGames');
+        const gamesPlayedEl = document.getElementById('gamesPlayed');
+        const totalScoreEl = document.getElementById('totalScore');
+        const sessionTimeEl = document.getElementById('sessionTime');
+        
+        // Engine instance
+        let engine = null;
+        let sessionStartTime = null;
+        let timerInterval = null;
+        let switchCountdownInterval = null;
+        
+        // Initialize the engine
+        async function initializeEngine() {
+            try {
+                loading.style.display = 'block';
+                
+                // Create engine instance
+                engine = new GameRouletteEngine('#gameContainer', {
+                    gameSwitchInterval: 60000, // 60 seconds
+                    canvasWidth: 800,
+                    canvasHeight: 600,
+                    enableAnalytics: true
+                });
+                
+                // Register games
+                engine.registerGame(new SnakeGame());
+                
+                // Set up event listeners
+                setupEventListeners();
+                
+                // Update stats
+                updateStats();
+                
+                loading.style.display = 'none';
+                console.log('🎰 Game Roulette Engine initialized successfully!');
+                
+            } catch (error) {
+                console.error('❌ Failed to initialize engine:', error);
+                loading.style.display = 'none';
+                gameContainer.innerHTML = '<p style="color: #ff6b6b;">Failed to initialize engine. Please check the console for details.</p>';
+            }
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Engine events
+            engine.on('sessionStarted', (event) => {
+                console.log('🎰 Session started:', event.data);
+                sessionStartTime = Date.now();
+                startTimer();
+                updateStats();
+            });
+            
+            engine.on('sessionEnded', (event) => {
+                console.log('🎰 Session ended:', event.data);
+                stopTimer();
+                updateStats();
+            });
+            
+            engine.on('gameSwitched', (event) => {
+                console.log('🎲 Game switched:', event.data);
+                showGameSwitchNotice();
+                updateStats();
+            });
+            
+            engine.on('gameStarted', (event) => {
+                console.log('🎮 Game started:', event.data);
+                updateStats();
+            });
+            
+            engine.on('scoreUpdated', (event) => {
+                updateStats();
+            });
+            
+            // Button event listeners
+            startBtn.addEventListener('click', startEngine);
+            stopBtn.addEventListener('click', stopEngine);
+            switchBtn.addEventListener('click', () => engine?.switchGame());
+            pauseBtn.addEventListener('click', () => engine?.pauseGame());
+            resumeBtn.addEventListener('click', () => engine?.resumeGame());
+        }
+        
+        // Start the engine
+        function startEngine() {
+            if (!engine) return;
+            
+            try {
+                engine.start();
+                
+                // Update button states
+                startBtn.disabled = true;
+                stopBtn.disabled = false;
+                switchBtn.disabled = false;
+                pauseBtn.disabled = false;
+                resumeBtn.disabled = true;
+                
+                console.log('🎰 Engine started!');
+                
+            } catch (error) {
+                console.error('❌ Failed to start engine:', error);
+            }
+        }
+        
+        // Stop the engine
+        function stopEngine() {
+            if (!engine) return;
+            
+            try {
+                engine.stop();
+                
+                // Update button states
+                startBtn.disabled = false;
+                stopBtn.disabled = true;
+                switchBtn.disabled = true;
+                pauseBtn.disabled = true;
+                resumeBtn.disabled = true;
+                
+                console.log('🎰 Engine stopped!');
+                
+            } catch (error) {
+                console.error('❌ Failed to stop engine:', error);
+            }
+        }
+        
+        // Timer functions
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+                const timeLeft = Math.max(0, 60 - (elapsed % 60));
+                timer.textContent = `${timeLeft}s`;
+                
+                if (timeLeft === 0) {
+                    timer.textContent = '🎲 Switching...';
+                }
+            }, 1000);
+        }
+        
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            timer.textContent = '60s';
+        }
+        
+        // Show game switch notice
+        function showGameSwitchNotice() {
+            switchNotice.style.display = 'block';
+            
+            let countdown = 5;
+            switchCountdown.textContent = countdown;
+            
+            if (switchCountdownInterval) clearInterval(switchCountdownInterval);
+            
+            switchCountdownInterval = setInterval(() => {
+                countdown--;
+                switchCountdown.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    switchNotice.style.display = 'none';
+                    clearInterval(switchCountdownInterval);
+                }
+            }, 1000);
+        }
+        
+        // Update statistics
+        function updateStats() {
+            if (!engine) return;
+            
+            const stats = engine.getStats();
+            const session = engine.getCurrentSession();
+            
+            totalGamesEl.textContent = stats.totalGames;
+            gamesPlayedEl.textContent = stats.gamesPlayed;
+            totalScoreEl.textContent = stats.totalScore;
+            
+            if (sessionStartTime) {
+                const sessionTime = Math.floor((Date.now() - sessionStartTime) / 1000);
+                sessionTimeEl.textContent = `${sessionTime}s`;
+            }
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeEngine);
+        
+        // Clean up on page unload
+        window.addEventListener('beforeunload', () => {
+            if (engine) {
+                engine.stop();
+            }
+            if (timerInterval) clearInterval(timerInterval);
+            if (switchCountdownInterval) clearInterval(switchCountdownInterval);
+        });
+    </script>
+</body>
+</html>

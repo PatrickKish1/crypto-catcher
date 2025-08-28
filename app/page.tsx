@@ -2,16 +2,16 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to crypto-catcher-enhanced after 2 seconds
+    // Redirect to crypto-catcher after 3 seconds
     const timer = setTimeout(() => {
       router.push('/crypto-catcher');
-
-    }, 2000);
+    }, 3000);
 
     // Cleanup timer on component unmount
     return () => clearTimeout(timer);
@@ -44,6 +44,20 @@ export default function Home() {
           <div className="flex justify-center mt-6">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
           </div>
+        </div>
+
+        {/* Game Roulette Promo */}
+        <div className="mt-12 p-6 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl text-white max-w-md mx-auto">
+          <h3 className="text-xl font-bold mb-3">🎰 New: Game Roulette!</h3>
+          <p className="text-sm mb-4 text-purple-100">
+            Experience unpredictable game switching powered by VRF randomness!
+          </p>
+          <Link 
+            href="/game-roulette"
+            className="inline-block bg-white text-purple-600 font-bold py-2 px-4 rounded-lg hover:bg-purple-50 transition-colors"
+          >
+            Try Game Roulette →
+          </Link>
         </div>
       </div>
     </div>
