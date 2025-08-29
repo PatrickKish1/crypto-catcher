@@ -68,7 +68,7 @@ export default function GameRoulettePage() {
         )}
 
         {/* Game Roulette Interface */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 scale-[0.7]">
           {isConnected ? (
             <>
               <div className="mb-8 text-center">

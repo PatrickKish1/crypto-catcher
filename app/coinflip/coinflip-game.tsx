@@ -2,10 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { useTheme } from "next-themes";
-import { DifficultyLevel } from '@/lib/game-roulette-config';
 
 interface CoinFlipProps {
-  difficulty: DifficultyLevel;
+  difficulty: number; // 0 = EASY, 1 = MEDIUM, 2 = HARD, 3 = EXPERT
   onStateChange: (state: any) => void;
 }
 
@@ -14,7 +13,7 @@ interface GameState {
   score: number;
   level: number;
   tokens: number;
-  difficulty: DifficultyLevel;
+  difficulty: number;
   isPaused: boolean;
   gameData: any;
 }
@@ -37,10 +36,10 @@ const CoinFlip: React.FC<CoinFlipProps> = ({ difficulty, onStateChange }) => {
   // Difficulty multipliers
   const getDifficultyMultiplier = () => {
     switch (difficulty) {
-      case DifficultyLevel.EASY: return 1.0;
-      case DifficultyLevel.MEDIUM: return 1.2;
-      case DifficultyLevel.HARD: return 1.5;
-      case DifficultyLevel.EXPERT: return 2.0;
+      case 0: return 1.0; // EASY
+      case 1: return 1.2; // MEDIUM
+      case 2: return 1.5; // HARD
+      case 3: return 2.0; // EXPERT
       default: return 1.0;
     }
   };
@@ -169,10 +168,10 @@ const CoinFlip: React.FC<CoinFlipProps> = ({ difficulty, onStateChange }) => {
 
   const getDifficultyColor = () => {
     switch (difficulty) {
-      case DifficultyLevel.EASY: return "text-green-400";
-      case DifficultyLevel.MEDIUM: return "text-yellow-400";
-      case DifficultyLevel.HARD: return "text-orange-400";
-      case DifficultyLevel.EXPERT: return "text-red-400";
+      case 0: return "text-green-400"; // EASY
+      case 1: return "text-yellow-400"; // MEDIUM
+      case 2: return "text-orange-400"; // HARD
+      case 3: return "text-red-400"; // EXPERT
       default: return "text-gray-400";
     }
   };
@@ -186,10 +185,10 @@ const CoinFlip: React.FC<CoinFlipProps> = ({ difficulty, onStateChange }) => {
           <div className="flex items-center justify-center gap-2">
             <span className="text-gray-600 dark:text-gray-400">Difficulty:</span>
             <span className={`font-bold ${getDifficultyColor()}`}>
-              {difficulty === DifficultyLevel.EASY && "Easy"}
-              {difficulty === DifficultyLevel.MEDIUM && "Medium"}
-              {difficulty === DifficultyLevel.HARD && "Hard"}
-              {difficulty === DifficultyLevel.EXPERT && "Expert"}
+              {difficulty === 0 && "Easy"}
+              {difficulty === 1 && "Medium"}
+              {difficulty === 2 && "Hard"}
+              {difficulty === 3 && "Expert"}
             </span>
           </div>
           <div className="text-sm text-gray-500 dark:text-gray-400">

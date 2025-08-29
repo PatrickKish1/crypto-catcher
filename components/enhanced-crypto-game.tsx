@@ -3,54 +3,19 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useTheme } from "next-themes"
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { ethers } from 'ethers'
-import { Randomness } from 'randomness-js'
 import { tokens, difficultyLevels, type Token } from "@/lib/lib/config/token"
 import { saveTokenScore, getTokenScores } from "@/lib/lib/cookies"
 import { toast } from "sonner"
 
-import { ENHANCED_CONTRACTS } from '@/lib/enhanced-contracts'
-const RANDOMNESS_CONTRACT_ADDRESS = ENHANCED_CONTRACTS.RANDOMNESS
-const RANDOMNESS_CONTRACT_ABI = [
-  {
-    "inputs": [
-      {
-        "internalType": "uint32",
-        "name": "callbackGasLimit",
-        "type": "uint32"
-      }
-    ],
-    "name": "generateWithDirectFunding",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "randomness",
-    "outputs": [
-      {
-        "internalType": "bytes32",
-        "name": "",
-        "type": "bytes32"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-] as const
+// Enhanced Crypto Game with simulated VRF
+
+// Add interface for props
+interface EnhancedCryptoGameProps {
+  difficulty: number; // 0 = EASY, 1 = MEDIUM, 2 = HARD, 3 = EXPERT
+  onStateChange: (state: any) => void;
+}
 
 interface GameSession {
   sessionId: string
@@ -72,7 +37,7 @@ interface UserProfile {
   achievements: number[]
 }
 
-const EnhancedCryptoGame = () => {
+const EnhancedCryptoGame: React.FC<EnhancedCryptoGameProps> = ({ difficulty, onStateChange }) => {
   const { isConnected, address } = useAccount()
   const { theme } = useTheme()
   
@@ -83,7 +48,7 @@ const EnhancedCryptoGame = () => {
   const [gameStarted, setGameStarted] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [selectedToken, setSelectedToken] = useState<Token>(tokens[0])
-  const [difficulty, setDifficulty] = useState(difficultyLevels[0])
+  const [gameDifficulty, setGameDifficulty] = useState(difficultyLevels[difficulty] || difficultyLevels[0])
   const [gameOver, setGameOver] = useState(false)
   const [highScore, setHighScore] = useState(0)
   const [imagesLoaded, setImagesLoaded] = useState(false)
@@ -97,18 +62,31 @@ const EnhancedCryptoGame = () => {
   const [nextLevelThreshold, setNextLevelThreshold] = useState<number | null>(null)
   const [currentGameLevel, setCurrentGameLevel] = useState(1)
   const [levelChangeEffect, setLevelChangeEffect] = useState(false)
+  const [level, setLevel] = useState(1)
+  const [tokenCount, setTokenCount] = useState(0)
+
+  // Update game state for roulette
+  useEffect(() => {
+    const gameState = {
+      gameType: 6 + difficulty, // ENHANCED_CRYPTO_CATCHER_FREE = 6, etc.
+      score,
+      level,
+      tokens: tokenCount,
+      difficulty: difficulty,
+      isPaused: isPaused,
+      gameData: {
+        selectedToken: selectedToken.symbol,
+        highScore,
+        tokenScores,
+        gameMode,
+        currentSession: currentSession?.sessionType,
+        currentGameLevel
+      }
+    };
+    onStateChange(gameState);
+  }, [score, level, tokenCount, difficulty, isPaused, selectedToken, highScore, tokenScores, gameMode, currentSession, currentGameLevel, onStateChange]);
   
-  // VRF contract integration
-  const { writeContract, data: hash, isPending } = useWriteContract()
-  const { isLoading: isTransactionLoading, isSuccess: isTransactionSuccess } = useWaitForTransactionReceipt({
-    hash,
-  })
-  
-  const { data: vrfRandomness, refetch: refetchVRF } = useReadContract({
-    address: RANDOMNESS_CONTRACT_ADDRESS,
-    abi: RANDOMNESS_CONTRACT_ABI,
-    functionName: 'randomness',
-  })
+  // VRF contract integration (simplified - no blockchain)
 
   // Session type configurations
   const sessionConfigs = {
@@ -146,7 +124,7 @@ const EnhancedCryptoGame = () => {
     loadImages()
   }, [])
 
-  // Create VRF-enhanced game session
+  // Create VRF-enhanced game session (simplified - no blockchain)
   const createVRFSession = async (sessionType: keyof typeof sessionConfigs) => {
     if (!isConnected) {
       toast.error("Please connect your wallet first")
@@ -156,54 +134,28 @@ const EnhancedCryptoGame = () => {
     setIsCreatingSession(true)
     
     try {
-      const callbackGasLimit = 700_000
-      const jsonProvider = new ethers.JsonRpcProvider(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`)
-      const randomness = Randomness.createBaseSepolia(jsonProvider)
-      const [requestCallBackPrice] = await randomness.calculateRequestPriceNative(BigInt(callbackGasLimit))
+      // Simulate blockchain delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
       
-      const config = sessionConfigs[sessionType]
-      const totalCost = requestCallBackPrice + BigInt(ethers.parseEther(config.entryFee.toString()))
-
-      writeContract({
-        address: RANDOMNESS_CONTRACT_ADDRESS,
-        abi: RANDOMNESS_CONTRACT_ABI,
-        functionName: 'generateWithDirectFunding',
-        args: [callbackGasLimit],
-        value: totalCost,
-      })
-
-      toast.success("VRF session creation initiated!")
+      // Generate mock VRF randomness for demo
+      const mockRandomness = ethers.keccak256(ethers.randomBytes(32))
       
-    } catch (error) {
-      console.error('VRF session creation failed:', error)
-      toast.error("Failed to create VRF session")
-      setIsCreatingSession(false)
-    }
-  }
-
-  // Handle VRF transaction success
-  useEffect(() => {
-    if (isTransactionSuccess && vrfRandomness) {
-      // Generate session parameters from VRF
-      const randomBytes = ethers.getBytes(vrfRandomness.toString())
-      const sessionSeed = ethers.keccak256(randomBytes)
-      
-      // Generate level change thresholds
+      // Generate level change thresholds from mock VRF
       const thresholds: number[] = []
       for (let i = 0; i < 5; i++) {
-        const threshold = 100 * (i + 1) + (parseInt(sessionSeed.slice(2 + i * 2, 4 + i * 2), 16) % (200 * (i + 1)))
+        const threshold = 100 * (i + 1) + (parseInt(mockRandomness.slice(2 + i * 2, 4 + i * 2), 16) % (200 * (i + 1)))
         thresholds.push(threshold)
       }
       
       // Create session
       const newSession: GameSession = {
         sessionId: `vrf-${Date.now()}`,
-        sessionType: 'BRONZE', // Default for now
+        sessionType: sessionType,
         isActive: true,
         seedReceived: true,
         levelChangeThresholds: thresholds,
         currentLevelIndex: 0,
-        vrfMultiplier: 120, // Base Bronze multiplier
+        vrfMultiplier: sessionConfigs[sessionType].baseMultiplier,
         isSealed: false
       }
       
@@ -217,8 +169,14 @@ const EnhancedCryptoGame = () => {
       // Auto-start the game
       setGameStarted(true)
       
+    } catch (error) {
+      console.error('VRF session creation failed:', error)
+      toast.error("Failed to create VRF session")
+      setIsCreatingSession(false)
     }
-  }, [isTransactionSuccess, vrfRandomness])
+  }
+
+  // VRF session handling (simplified - no blockchain)
 
   // Enhanced game logic with VRF features
   useEffect(() => {
@@ -278,9 +236,7 @@ const EnhancedCryptoGame = () => {
     const spawnCoin = () => {
       // Enhanced spawn logic based on game mode and level
       const baseMaxCoins = 6
-      let difficultyMultiplier = difficulty.name === "Easy" ? 1 : 
-                                 difficulty.name === "Medium" ? 1.2 : 
-                                 difficulty.name === "Hard" ? 1.5 : 1.8
+      let difficultyMultiplier = difficultyLevels[difficulty].speed // Use the difficulty prop
       
       // Apply VRF level multiplier if in enhanced mode
       if (gameMode === 'VRF_ENHANCED' && currentSession) {
@@ -293,7 +249,7 @@ const EnhancedCryptoGame = () => {
         return
       }
 
-      let spawnRate = difficulty.spawnRate
+      let spawnRate = difficultyLevels[difficulty].spawnRate // Use the difficulty prop
       if (gameMode === 'VRF_ENHANCED') {
         spawnRate *= (1 + currentGameLevel * 0.1) // Increase spawn rate with level
       }
@@ -317,7 +273,7 @@ const EnhancedCryptoGame = () => {
         const coin = gameState.coins[i]
         
         // Enhanced speed based on current level
-        let coinSpeed = difficulty.speed
+        let coinSpeed = difficultyLevels[difficulty].speed // Use the difficulty prop
         if (gameMode === 'VRF_ENHANCED') {
           coinSpeed *= (1 + (currentGameLevel - 1) * 0.2)
         }
@@ -446,7 +402,7 @@ const EnhancedCryptoGame = () => {
       canvas.removeEventListener("touchmove", handleTouchMove)
       cancelAnimationFrame(gameState.animationFrameId)
     }
-  }, [gameStarted, isPaused, difficulty.speed, difficulty.spawnRate, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, gameMode, currentSession, nextLevelThreshold, currentGameLevel, levelChangeEffect, difficulty.name])
+  }, [gameStarted, isPaused, difficulty, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, gameMode, currentSession, nextLevelThreshold, currentGameLevel, levelChangeEffect])
 
   const resetGame = () => {
     setGameOver(false)
@@ -519,7 +475,7 @@ const EnhancedCryptoGame = () => {
               <button
                 key={type}
                 onClick={() => createVRFSession(type as keyof typeof sessionConfigs)}
-                disabled={isCreatingSession || isPending}
+                disabled={isCreatingSession}
                 className={`p-3 rounded-lg border-2 hover:shadow-lg transition-all ${
                   isCreatingSession ? 'opacity-50 cursor-not-allowed' : ''
                 } bg-${config.color}-100 border-${config.color}-300 hover:bg-${config.color}-200`}
@@ -577,14 +533,14 @@ const EnhancedCryptoGame = () => {
             ))}
         </select>
 
-        <select
-          className="p-2 rounded border bg-background text-foreground"
-          value={difficulty.name}
-          onChange={(e) =>
-            setDifficulty(difficultyLevels.find((d) => d.name === e.target.value) || difficultyLevels[0])
-          }
-          disabled={gameStarted && !gameOver}
-        >
+                  <select
+            className="p-2 rounded border bg-background text-foreground"
+            value={difficultyLevels[difficulty].name}
+            onChange={(e) =>
+              setGameDifficulty(difficultyLevels.find((d) => d.name === e.target.value) || difficultyLevels[0])
+            }
+            disabled={gameStarted && !gameOver}
+          >
           {difficultyLevels.map((level) => (
             <option key={level.name} value={level.name}>
               {level.name}

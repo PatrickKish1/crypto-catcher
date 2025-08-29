@@ -5,19 +5,45 @@ import { useTheme } from "next-themes"
 import { tokens, difficultyLevels, type Token } from "@/lib/lib/config/token"
 import { saveTokenScore, getTokenScores } from "@/lib/lib/cookies"
 
-const CryptoGame = () => {
+// Add interface for props
+interface CryptoGameProps {
+  difficulty: number; // 0 = EASY, 1 = MEDIUM, 2 = HARD, 3 = EXPERT
+  onStateChange: (state: any) => void;
+}
+
+const CryptoGame: React.FC<CryptoGameProps> = ({ difficulty, onStateChange }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const tokenImagesRef = useRef<Map<string, HTMLImageElement>>(new Map())
   const [score, setScore] = useState(0)
   const [gameStarted, setGameStarted] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [selectedToken, setSelectedToken] = useState<Token>(tokens[0])
-  const [difficulty, setDifficulty] = useState(difficultyLevels[0])
+  const [gameDifficulty, setGameDifficulty] = useState(difficultyLevels[difficulty] || difficultyLevels[0])
   const [gameOver, setGameOver] = useState(false)
   const [highScore, setHighScore] = useState(0)
   const [imagesLoaded, setImagesLoaded] = useState(false)
+  const [level, setLevel] = useState(1)
+  const [tokenCount, setTokenCount] = useState(0)
   const { theme } = useTheme()
   const [tokenScores, setTokenScores] = useState(getTokenScores())
+
+  // Update game state for roulette
+  useEffect(() => {
+    const gameState = {
+      gameType: 3 + difficulty, // CRYPTO_CATCHER_EASY = 3, etc.
+      score,
+      level,
+      tokens: tokenCount,
+      difficulty: difficulty,
+      isPaused: isPaused,
+      gameData: {
+        selectedToken: selectedToken.symbol,
+        highScore,
+        tokenScores
+      }
+    };
+    onStateChange(gameState);
+  }, [score, level, tokenCount, difficulty, isPaused, selectedToken, highScore, tokenScores, onStateChange]);
 
   // Load images when component mounts or theme changes
   useEffect(() => {
@@ -105,16 +131,16 @@ const CryptoGame = () => {
     const spawnCoin = () => {
       // Scale maximum coins based on difficulty for better game balance
       const baseMaxCoins = 6;
-      const difficultyMultiplier = difficulty.name === "Easy" ? 1 : 
-                                   difficulty.name === "Medium" ? 1.2 : 
-                                   difficulty.name === "Hard" ? 1.5 : 1.8; // Expert
+      const difficultyMultiplier = difficultyLevels[difficulty].name === "Easy" ? 1 : 
+                                   difficultyLevels[difficulty].name === "Medium" ? 1.2 : 
+                                   difficultyLevels[difficulty].name === "Hard" ? 1.5 : 1.8; // Expert
       const maxCoinsOnScreen = Math.floor(baseMaxCoins * difficultyMultiplier);
       
       if (gameState.coins.length >= maxCoinsOnScreen) {
         return; // Don't spawn if we already have too many coins
       }
 
-      if (Math.random() < difficulty.spawnRate) {
+      if (Math.random() < difficultyLevels[difficulty].spawnRate) {
         // 80% chance for selected token, 20% chance for obstacle tokens
         const randomToken = Math.random() < 0.8
           ? selectedToken
@@ -132,7 +158,7 @@ const CryptoGame = () => {
     const updateCoins = () => {
       for (let i = gameState.coins.length - 1; i >= 0; i--) {
         const coin = gameState.coins[i]
-        coin.y += difficulty.speed
+        coin.y += difficultyLevels[difficulty].speed
         coin.rotation += 0.02
 
         // Adjusted collision detection for larger tokens
@@ -214,7 +240,7 @@ const CryptoGame = () => {
       canvas.removeEventListener("touchmove", handleTouchMove)
       cancelAnimationFrame(gameState.animationFrameId)
     }
-  }, [gameStarted, isPaused, difficulty.speed, difficulty.spawnRate, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, difficulty.name])
+  }, [gameStarted, isPaused, difficulty, gameOver, imagesLoaded, selectedToken, score, highScore, tokenScores, difficultyLevels])
 
   const resetGame = () => {
     setGameOver(false)
@@ -245,9 +271,9 @@ const CryptoGame = () => {
 
         <select
           className="p-2 rounded border bg-background text-foreground"
-          value={difficulty.name}
+          value={difficultyLevels[difficulty].name}
           onChange={(e) =>
-            setDifficulty(difficultyLevels.find((d) => d.name === e.target.value) || difficultyLevels[0])
+            setGameDifficulty(difficultyLevels.find((d) => d.name === e.target.value) || difficultyLevels[0])
           }
           disabled={gameStarted && !gameOver}
         >

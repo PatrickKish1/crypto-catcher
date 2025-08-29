@@ -1,331 +1,151 @@
-# 🎮 Crypto Catcher - VRF-Enhanced Blockchain Game
-
-A revolutionary blockchain-based crypto catching game that combines classic arcade gameplay with cutting-edge blockchain technology including **Verifiable Random Functions (VRF)**, **Blocklock encryption**, and **smart contract-based rewards**.
-
-## 🎯 **Project Overview**
-
-Crypto Catcher is not just a game—it's a demonstration of how blockchain technology can create **truly fair, verifiable, and engaging gaming experiences**. Players catch falling crypto tokens while experiencing:
-
-- **🎲 VRF Randomness**: Unpredictable difficulty changes powered by verifiable random functions
-- **🔐 Sealed Sessions**: Hidden reward multipliers revealed after gameplay using blocklock encryption  
-- **💰 Blockchain Rewards**: Earn and claim USDC tokens based on your performance
-- **👥 User Profiles**: Persistent progress, levels, and achievements on-chain
-
-## 🏗️ **Project Architecture**
-
-```
-crypto-catcher/
-├── 🎮 Game Components
-│   ├── components/enhanced-crypto-game.tsx    # Main VRF-enhanced game
-│   ├── components/crypto-game.tsx             # Classic mode game
-│   └── components/token-swap.tsx              # Token claiming interface
-├── 📱 Frontend Pages
-│   ├── app/crypto-catcher-enhanced/           # Enhanced VRF mode
-│   ├── app/crypto-catcher/                    # Classic mode + claims
-│   └── app/page.tsx                           # Auto-redirect to enhanced game
-├── 🔗 Smart Contracts
-│   ├── contracts/CryptoCatcherRandomness.sol  # VRF integration
-│   ├── contracts/CryptoCatcherBlocklock.sol   # Sealed sessions
-│   ├── contracts/EnhancedGameClaims.sol       # Reward distribution
-│   ├── contracts/UserManager.sol              # User profiles & levels
-│   └── contracts/MockERC20.sol                # USDC simulation
-├── 🚀 Deployment Scripts
-│   ├── scripts/deploy-with-usdc-options.js    # Main deployment
-│   └── scripts/deploy-all-contracts.js        # Full contract suite
-└── ⚙️ Configuration
-    ├── lib/enhanced-contracts.ts              # Contract addresses
-    ├── lib/lib/config/token.ts                # Game tokens & difficulty
-    └── hardhat.config.ts                      # Blockchain configuration
-```
-
-## 🎮 **Game Modes**
-
-### **1. Classic Mode** (`/crypto-catcher`)
-- **No wallet required** - Play immediately
-- Basic crypto catching gameplay
-- Local score tracking
-- Simple difficulty progression
-
-### **2. Enhanced Mode** (`/crypto-catcher-enhanced`) 
-- **Wallet connection required**
-- **VRF-powered randomness** for level changes
-- **Session types**: FREE, BRONZE, SILVER, GOLD, PLATINUM
-- **Dynamic difficulty scaling** based on verifiable randomness
-- **Blockchain rewards** and persistent progress
-
-## 🚀 **Quick Start**
-
-### **Prerequisites**
-- Node.js 18+ 
-- npm or yarn
-- MetaMask or compatible wallet
-- Base Sepolia testnet ETH
-
-### **1. Installation**
-```bash
-git clone <repository-url>
-cd crypto-catcher
-npm install
-```
-
-### **2. Environment Setup**
-Create a `.env` file in the root directory:
-```env
-# Blockchain Configuration
-BASE_SEPOLIA_RPC_URL=https://sepolia.base.org
-PRIVATE_KEY=your_private_key_here
-
-# Optional: Alchemy API Key
-NEXT_PUBLIC_ALCHEMY_KEY=your_alchemy_key_here
-
-# Optional: Basescan API Key for contract verification
-BASESCAN_API_KEY=your_basescan_key_here
-```
-
-### **3. Deploy Smart Contracts**
-```bash
-# Deploy all contracts to Base Sepolia
-npx hardhat run scripts/deploy-with-usdc-options.js --network baseSepolia
-```
-
-### **4. Start Development Server**
-```bash
-npm run dev
-```
-
-### **5. Play the Game**
-- Visit `http://localhost:3000`
-- Auto-redirects to enhanced mode
-- Connect wallet for VRF features
-- Start catching crypto tokens! 🎯
-
-## 🔧 **Smart Contract Deployment**
-
-### **Required Contracts**
-1. **CryptoCatcherRandomness.sol** - VRF integration with Randamu
-2. **CryptoCatcherBlocklock.sol** - Sealed session management
-3. **EnhancedGameClaims.sol** - Reward distribution system
-4. **UserManager.sol** - User profiles and achievements
-5. **MockERC20.sol** - USDC token simulation
-
-### **Deployment Process**
-```bash
-# 1. Compile contracts
-npx hardhat compile
-
-# 2. Deploy to Base Sepolia
-npx hardhat run scripts/deploy-with-usdc-options.js --network baseSepolia
-
-# 3. Verify contracts (optional)
-npx hardhat verify --network baseSepolia <contract-address>
-```
-
-## 🎲 **VRF Integration**
-
-### **How It Works**
-1. **Player creates VRF session** with entry fee
-2. **Smart contract requests randomness** from Randamu network
-3. **Verifiable random number** determines level change thresholds
-4. **Game difficulty scales** unpredictably during gameplay
-5. **Session parameters** are sealed until completion
-
-### **Session Types**
-| Type | Entry Fee | Multiplier | Max Levels |
-|------|-----------|------------|------------|
-| FREE | 0 ETH | 1.0x | 2 |
-| BRONZE | 0.001 ETH | 1.2x | 3 |
-| SILVER | 0.005 ETH | 1.5x | 4 |
-| GOLD | 0.01 ETH | 2.0x | 5 |
-| PLATINUM | 0.025 ETH | 3.0x | 7 |
-
-## 🔐 **Blocklock Features**
-
-### **Sealed Sessions**
-- **Hidden multipliers** until session completion
-- **Encrypted reward data** using blocklock technology
-- **Verifiable fairness** without front-running
-- **Time-locked reveals** for suspense
-
-### **User Management**
-- **Persistent profiles** on-chain
-- **Level progression** system
-- **Achievement tracking**
-- **Leaderboard integration**
-
-## 💰 **Reward System**
-
-### **Token Types**
-- **BTC** (100 points) - Bitcoin
-- **ETH** (80 points) - Ethereum  
-- **SOL** (40 points) - Solana
-- **DOGE** (30 points) - Dogecoin
-- **RED** (-100 points) - Obstacle token
-- **BOMB** (-100 points) - Game over token
-
-### **Claiming Rewards**
-- **Minimum threshold**: 10 points
-- **USDC conversion**: Points to USDC token swaps
-- **Blockchain transactions**: Real on-chain rewards
-- **Transaction history**: View all claims on Basescan
-
-## 🎯 **Game Features**
-
-### **Core Gameplay**
-- **Canvas-based rendering** for smooth performance
-- **Touch and keyboard controls** for mobile/desktop
-- **Dynamic difficulty scaling** based on VRF
-- **Real-time collision detection**
-- **Score persistence** across sessions
-
-### **Enhanced Features**
-- **VRF-powered level changes** at random thresholds
-- **Session-based progression** with different tiers
-- **Blockchain integration** for verifiable fairness
-- **User profile management** with achievements
-- **Token-based reward system**
-
-## 🛠️ **Development**
-
-### **Tech Stack**
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **Styling**: Tailwind CSS, Radix UI components
-- **Blockchain**: Hardhat, Ethers.js, Wagmi
-- **VRF**: Randamu randomness libraries
-- **Encryption**: Blocklock-solidity
-- **State Management**: React hooks, localStorage
-
-### **Key Dependencies**
-```json
-{
-  "randomness-js": "^1.0.2",           // Randamu VRF library
-  "blocklock-solidity": "^0.0.13",     // Blocklock encryption
-  "randomness-solidity": "^0.0.7",     // Solidity VRF contracts
-  "wagmi": "^2.14.13",                 // React hooks for Ethereum
-  "ethers": "^6.15.0"                  // Ethereum library
-}
-```
-
-### **Development Commands**
-```bash
-# Development
-npm run dev              # Start dev server
-npm run build           # Build for production
-npm run start           # Start production server
-npm run lint            # Run ESLint
-
-# Smart Contracts
-npx hardhat compile     # Compile contracts
-npx hardhat test        # Run tests
-npx hardhat node        # Start local blockchain
-```
-
-## 🌐 **Networks**
-
-### **Supported Networks**
-- **Base Sepolia** (Testnet) - Primary development network
-- **Base Mainnet** - Production deployment
-- **Hardhat Network** - Local development
-
-### **Network Configuration**
-```typescript
-// hardhat.config.ts
-networks: {
-  baseSepolia: {
-    url: process.env.BASE_SEPOLIA_RPC_URL,
-    chainId: 84532,
-    accounts: [process.env.PRIVATE_KEY]
-  }
-}
-```
-
-## 📱 **User Experience**
-
-### **Game Flow**
-1. **Connect wallet** for enhanced features
-2. **Choose session type** (FREE to PLATINUM)
-3. **Create VRF session** with blockchain transaction
-4. **Play the game** with random difficulty changes
-5. **Complete session** and reveal sealed rewards
-6. **Claim USDC tokens** based on performance
-
-### **Controls**
-- **Arrow Keys** or **A/D**: Move wallet left/right
-- **Touch**: Drag on mobile devices
-- **Space**: Pause/resume game
-- **Escape**: Stop game
-
-## 🔍 **Troubleshooting**
-
-### **Common Issues**
-
-#### **VRF Session Stuck Loading**
-- **Cause**: Contracts not deployed or wrong addresses
-- **Solution**: Deploy contracts and update `lib/enhanced-contracts.ts`
-
-#### **Transaction Failures**
-- **Cause**: Insufficient ETH for gas fees
-- **Solution**: Ensure wallet has Base Sepolia ETH
-
-#### **Image Loading Errors**
-- **Cause**: Missing token images in `/public/assets/images/`
-- **Solution**: Add required token logo images
-
-### **Debug Mode**
-```bash
-# Enable detailed logging
-DEBUG=* npm run dev
-
-# Check contract deployment
-npx hardhat run scripts/deploy-with-usdc-options.js --network baseSepolia
-```
-
-## 🚀 **Deployment**
-
-### **Production Build**
-```bash
-# Build the application
-npm run build
-
-# Start production server
-npm run start
-
-# Deploy to Vercel/Netlify
-# The build output is in .next/ directory
-```
-
-### **Contract Verification**
-```bash
-# Verify on Basescan
-npx hardhat verify --network baseSepolia <contract-address> <constructor-args>
-```
-
-## 🤝 **Contributing**
-
-We welcome contributions! Please see our contributing guidelines:
-
-1. **Fork the repository**
-2. **Create a feature branch**
-3. **Make your changes**
-4. **Add tests if applicable**
-5. **Submit a pull request**
-
-### **Development Guidelines**
-- Follow TypeScript best practices
-- Use conventional commit messages
-- Test smart contracts thoroughly
-- Update documentation for new features
-
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🔗 **Links**
-
-- **Game**: [Play Crypto Catcher](http://localhost:3000)
-- **Documentation**: [Technical Guide](CRYPTO_CATCHER_TECHNICAL_GUIDE.md)
-- **Deployment**: [Deployment Instructions](DEPLOYMENT_INSTRUCTIONS.md)
-- **Blocklock**: [Blocklock Documentation](BLOCK-LOCK.md)
+# 🎰 Game Roulette - VRF-Powered Dynamic Gaming System
+
+## Project Title
+**Game Roulette: Unpredictable Gaming Experience with VRF Randomness and Blocklock Sealed Sessions**
+
+## Project Summary
+Game Roulette is an innovative gaming platform that automatically switches between multiple games every 60 seconds using Verifiable Random Functions (VRF) for unpredictable game selection and difficulty scaling. The system combines three distinct games (Coin Flip, Crypto Catcher, and Enhanced Crypto Catcher) with VRF-powered randomness and Blocklock conditional encryption for sealed reward multipliers, creating a unique "gambling roulette" experience where players never know what game or challenge awaits them next.
+
+## What real-world problem or challenge does your project address?
+
+### **Predictable Gaming Experience**
+Traditional gaming platforms suffer from predictable gameplay patterns where players can anticipate challenges, memorize solutions, and exploit known mechanics. This leads to:
+- **Boredom and disengagement** from repetitive gameplay
+- **Skill stagnation** due to lack of variety and surprise
+- **Reduced replayability** once optimal strategies are discovered
+- **Limited challenge progression** that doesn't adapt to player skill
+
+### **Lack of True Randomness in Gaming**
+Most games use pseudo-random number generators that can be:
+- **Predicted or manipulated** by skilled players
+- **Exploited through pattern recognition**
+- **Deterministic** based on seed values
+- **Vulnerable to reverse engineering**
+
+### **Inflexible Game State Management**
+Current gaming systems lack:
+- **Seamless game switching** without losing progress
+- **Dynamic difficulty adjustment** based on real-time performance
+- **Sealed reward systems** that prevent premature revelation
+- **Cross-game progression tracking**
+
+## Describe your solution in detail. How does the dcipher network provide a unique and effective solution to this problem?
+
+### **Core Solution: VRF-Powered Game Roulette**
+
+Our solution addresses these challenges through a multi-layered approach combining VRF randomness, Blocklock encryption, and intelligent game state management:
+
+#### **1. VRF-Enabled Unpredictable Game Switching**
+- **Every 60 seconds**, the system automatically switches to a new random game using VRF randomness
+- **Game selection is provably fair** and cannot be predicted or manipulated
+- **Difficulty levels are randomly assigned** for each game switch
+- **Players experience genuine surprise** with each transition
+
+#### **2. Blocklock Network Integration for Sealed Sessions**
+The dcipher network provides **conditional encryption** that enables:
+- **Sealed reward multipliers** that are encrypted until specific conditions are met
+- **Time-locked rewards** that unlock after predetermined intervals
+- **Verifiable encryption** ensuring rewards cannot be tampered with
+- **Transparent decryption** when conditions are satisfied
+
+#### **3. Intelligent Game State Management**
+- **Automatic state preservation** when switching between games
+- **Progress restoration** when returning to previously played games
+- **Cross-game score aggregation** for comprehensive player tracking
+- **Seamless user experience** without data loss
+
+#### **4. Three Distinct Gaming Experiences**
+
+**🎯 Coin Flip (VRF-Enhanced)**
+- Simple heads/tails with VRF randomness
+- Difficulty-based multipliers (Easy: 1x, Medium: 1.2x, Hard: 1.5x, Expert: 2x)
+- VRF ensures truly random outcomes
+
+**🪙 Crypto Catcher (Classic)**
+- Catch falling cryptocurrency tokens while avoiding obstacles
+- Dynamic difficulty scaling based on VRF selection
+- Real-time score tracking and high score persistence
+
+**🚀 Enhanced Crypto Catcher (VRF + Blocklock)**
+- Advanced gameplay with VRF-powered level progression
+- Sealed reward multipliers using Blocklock encryption
+- Dynamic difficulty that changes based on VRF randomness
+- Session-based gameplay with encrypted rewards
+
+### **How dcipher Network Provides Unique Solutions**
+
+#### **Conditional Encryption for Gaming**
+- **Sealed Rewards**: Multipliers are encrypted and only revealed when specific conditions are met
+- **Time-Locked Progression**: Rewards unlock after predetermined time intervals
+- **Verifiable Fairness**: All encryption/decryption operations are transparent and verifiable
+
+#### **Enhanced Security and Trust**
+- **Tamper-Proof Rewards**: Encrypted values cannot be modified or manipulated
+- **Auditable Operations**: All Blocklock operations are recorded on-chain
+- **Decentralized Trust**: No single entity controls the encryption/decryption process
+
+#### **Unique Gaming Mechanics**
+- **Sealed Sessions**: Players commit to encrypted reward multipliers before gameplay
+- **Conditional Revelation**: Rewards are only revealed when specific game conditions are met
+- **Progressive Unlocking**: Multiple reward tiers that unlock at different milestones
+
+### **Technical Implementation**
+
+#### **Smart Contract Architecture**
+- **GameRoulette.sol**: Core contract managing roulette sessions and game switching
+- **VRF Integration**: Randamu VRF Network for provably fair randomness
+- **Blocklock Integration**: dcipher network for sealed reward encryption
+- **State Management**: Comprehensive game state saving and restoration
+
+#### **Frontend Components**
+- **Game Roulette Controller**: Manages session creation, game switching, and state persistence
+- **Adaptive Game Components**: Each game adapts to VRF-selected difficulty levels
+- **Real-Time Updates**: Live countdown timers and game switch notifications
+- **Responsive UI**: Modern, intuitive interface with smooth transitions
+
+#### **Randomness and Encryption Flow**
+1. **VRF Request**: System requests random values from Randamu VRF Network
+2. **Game Selection**: VRF output determines next game and difficulty level
+3. **Blocklock Encryption**: Reward multipliers are encrypted using dcipher network
+4. **Conditional Decryption**: Rewards are revealed when game conditions are met
+
+### **Real-World Impact**
+
+#### **For Players**
+- **Unpredictable Entertainment**: Every gaming session is unique and surprising
+- **Skill Development**: Exposure to diverse game mechanics and difficulty levels
+- **Engaging Progression**: Sealed rewards create anticipation and motivation
+- **Fair Gaming**: VRF ensures truly random and unmanipulatable outcomes
+
+#### **For Developers**
+- **Modular Architecture**: Easy to add new games and mechanics
+- **Scalable Framework**: VRF and Blocklock integration can be extended
+- **Audit-Ready Code**: Transparent randomness and encryption operations
+- **Cross-Platform Compatibility**: Can be deployed on any EVM-compatible blockchain
+
+#### **For the Gaming Industry**
+- **Innovation in Game Design**: New paradigm for dynamic difficulty and progression
+- **Trust and Transparency**: VRF and Blocklock provide verifiable fairness
+- **User Engagement**: Unpredictable gameplay increases retention and replayability
+- **Blockchain Integration**: Demonstrates practical applications of VRF and encryption in gaming
+
+### **Future Enhancements**
+
+#### **Advanced VRF Features**
+- **Multi-dimensional Randomness**: VRF for game selection, difficulty, and special events
+- **Adaptive Difficulty**: VRF-based difficulty adjustment based on player performance
+- **Tournament Mode**: VRF-powered tournament brackets and matchmaking
+
+#### **Enhanced Blocklock Integration**
+- **Multi-tier Rewards**: Complex encryption schemes with multiple unlock conditions
+- **Social Features**: Sealed rewards that unlock through collaborative gameplay
+- **Achievement System**: Encrypted achievements that reveal progressively
+
+#### **Cross-Chain Expansion**
+- **Multi-chain Support**: Deploy on Ethereum, Polygon, and other EVM chains
+- **Cross-chain State**: Synchronize game progress across different networks
+- **Interoperable Rewards**: Sealed rewards that can be claimed on multiple chains
 
 ---
 
-**🎮 Ready to catch some crypto? Connect your wallet and start playing the future of blockchain gaming!** 🚀
+**Game Roulette represents a paradigm shift in gaming, combining the unpredictability of VRF randomness with the security of Blocklock encryption to create an engaging, fair, and truly unique gaming experience that cannot be replicated by traditional gaming systems.**

@@ -1,24 +1,41 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
-import { useAccount, useWriteContract, useReadContract } from 'wagmi'
-import { ethers } from 'ethers'
-import { Randomness } from 'randomness-js'
+import { useAccount } from 'wagmi'
 import { toast } from "sonner"
-import { GAME_ROULETTE_CONTRACT, GAME_ROULETTE_ABI, GameType, DifficultyLevel } from '@/lib/game-roulette-config'
 
 // Import game components
 import CoinFlip from '@/app/coinflip/coinflip-game'
 import CryptoGame from '@/components/crypto-game'
 import EnhancedCryptoGame from '@/components/enhanced-crypto-game'
 
+// Simplified enums for now
+enum GameType {
+  COINFLIP_EASY = 0,
+  COINFLIP_MEDIUM = 1,
+  COINFLIP_HARD = 2,
+  CRYPTO_CATCHER_EASY = 3,
+  CRYPTO_CATCHER_MEDIUM = 4,
+  CRYPTO_CATCHER_HARD = 5,
+  ENHANCED_CRYPTO_CATCHER_FREE = 6,
+  ENHANCED_CRYPTO_CATCHER_BRONZE = 7,
+  ENHANCED_CRYPTO_CATCHER_SILVER = 8,
+  ENHANCED_CRYPTO_CATCHER_GOLD = 9,
+  ENHANCED_CRYPTO_CATCHER_PLATINUM = 10,
+}
+
+enum DifficultyLevel {
+  EASY = 0,
+  MEDIUM = 1,
+  HARD = 2,
+  EXPERT = 3,
+}
+
 interface RouletteSession {
   sessionId: string
   currentGame: GameType
   currentDifficulty: DifficultyLevel
   isActive: boolean
-  isSealed: boolean
-  sealedMultiplier: number
   gamesPlayed: number
   totalScore: number
 }
@@ -32,8 +49,6 @@ interface GameState {
   isPaused: boolean
   gameData: any
 }
-
-const isZeroAddress = (addr: string | undefined) => !addr || /^0x0{40}$/i.test(addr)
 
 const GameRoulette = () => {
   const { isConnected, address } = useAccount()
@@ -54,32 +69,99 @@ const GameRoulette = () => {
   const gameStateRef = useRef<Map<GameType, GameState>>(new Map())
   const countdownRef = useRef<NodeJS.Timeout | null>(null)
   
-  // Contract interactions
-  const { writeContractAsync } = useWriteContract()
-  
-  // Contract reads
-  const { data: activeSessionId } = useReadContract({
-    address: GAME_ROULETTE_CONTRACT as `0x${string}`,
-    abi: GAME_ROULETTE_ABI as any,
-    functionName: 'getPlayerActiveSession',
-    args: [address as `0x${string}`],
-    query: { enabled: !!address && !isZeroAddress(GAME_ROULETTE_CONTRACT) }
-  })
-  
-  const { data: sessionData } = useReadContract({
-    address: GAME_ROULETTE_CONTRACT as `0x${string}`,
-    abi: GAME_ROULETTE_ABI as any,
-    functionName: 'getSession',
-    args: [activeSessionId || 0n],
-    query: { enabled: !!activeSessionId && !isZeroAddress(GAME_ROULETTE_CONTRACT) }
-  })
-  
-  // Initialize session
-  useEffect(() => {
-    if (activeSessionId && sessionData) {
-      updateSessionState(sessionData)
+  // Create new roulette session (simplified - no blockchain)
+  const createRouletteSession = async () => {
+    if (!isConnected) return toast.error("Please connect your wallet first")
+    
+    setIsCreatingSession(true)
+    try {
+      // Simulate blockchain delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Create a new session with random initial game
+      const initialGame = Math.floor(Math.random() * 11) as GameType
+      const initialDifficulty = Math.floor(Math.random() * 4) as DifficultyLevel
+      
+      const newSession: RouletteSession = {
+        sessionId: `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        currentGame: initialGame,
+        currentDifficulty: initialDifficulty,
+        isActive: true,
+        gamesPlayed: 0,
+        totalScore: 0
+      }
+      
+      setCurrentSession(newSession)
+      setCurrentGameType(initialGame)
+      setCurrentDifficulty(initialDifficulty)
+      setTimeRemaining(60)
+      
+      toast.success("🎰 Roulette session started! Your first game is ready!")
+    } catch (error: any) {
+      console.error("Failed to create session:", error)
+      toast.error("Failed to create roulette session")
+    } finally {
+      setIsCreatingSession(false)
     }
-  }, [activeSessionId, sessionData])
+  }
+  
+  // Request next game (simplified - no blockchain)
+  const triggerGameSwitch = async () => {
+    if (!currentSession) return
+
+    setIsRequestingNextGame(true)
+    try {
+      // Save current game state
+      await saveCurrentGameState()
+
+      // Simulate blockchain delay
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Randomly select next game and difficulty
+      const nextGame = Math.floor(Math.random() * 11) as GameType
+      const nextDifficulty = Math.floor(Math.random() * 4) as DifficultyLevel
+      
+      // Update session
+      setCurrentSession(prev => prev ? {
+        ...prev,
+        currentGame: nextGame,
+        currentDifficulty: nextDifficulty,
+        gamesPlayed: prev.gamesPlayed + 1
+      } : null)
+      
+      setCurrentGameType(nextGame)
+      setCurrentDifficulty(nextDifficulty)
+      setTimeRemaining(60)
+      
+      // Show game switch effect
+      setGameSwitchEffect(true)
+      setTimeout(() => setGameSwitchEffect(false), 2000)
+      
+      toast.success("🎲 Switched to new game!")
+    } catch (error: any) {
+      console.error("Failed to switch game:", error)
+      toast.error("Failed to switch game")
+    } finally {
+      setIsRequestingNextGame(false)
+    }
+  }
+  
+  // Save current game state (simplified - no blockchain)
+  const saveCurrentGameState = async () => {
+    if (!currentSession) return
+    const currentState = gameStateRef.current.get(currentGameType)
+    if (!currentState) return
+
+    try {
+      // Simulate saving to blockchain
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
+      setSavedGameStates(prev => new Map(prev.set(currentGameType, currentState)))
+      console.log('Game state saved:', currentState)
+    } catch (error) {
+      console.warn('saveGameState failed:', error)
+    }
+  }
   
   // Countdown timer
   useEffect(() => {
@@ -99,112 +181,6 @@ const GameRoulette = () => {
       if (countdownRef.current) clearInterval(countdownRef.current)
     }
   }, [currentSession])
-  
-  // Create new roulette session
-  const createRouletteSession = async () => {
-    if (!isConnected) return toast.error("Please connect your wallet first")
-    if (isZeroAddress(GAME_ROULETTE_CONTRACT)) return toast.error("GameRoulette contract not configured. Deploy and set GAME_ROULETTE_CONTRACT.")
-    if (!GAME_ROULETTE_ABI || (GAME_ROULETTE_ABI as any[])?.length === 0) return toast.error("GameRoulette ABI missing. Update GAME_ROULETTE_ABI.")
-    if (!process.env.NEXT_PUBLIC_ALCHEMY_KEY) return toast.error("NEXT_PUBLIC_ALCHEMY_KEY not set")
-    
-    setIsCreatingSession(true)
-    try {
-      const callbackGasLimit = 700_000
-      const jsonProvider = new ethers.JsonRpcProvider(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`)
-      const randomness = Randomness.createBaseSepolia(jsonProvider)
-      const [requestCallBackPrice] = await randomness.calculateRequestPriceNative(BigInt(callbackGasLimit))
-
-      const hash = await writeContractAsync({
-        address: GAME_ROULETTE_CONTRACT as `0x${string}`,
-        abi: GAME_ROULETTE_ABI as any,
-        functionName: 'createRouletteSession',
-        args: [callbackGasLimit],
-        value: requestCallBackPrice,
-      })
-
-      toast.success(`Tx submitted: ${hash.slice(0,10)}…`)
-    } catch (error: any) {
-      console.error("Failed to create session:", error)
-      toast.error(error?.shortMessage || error?.message || "Failed to create roulette session")
-    } finally {
-      setIsCreatingSession(false)
-    }
-  }
-  
-  // Request next game using VRF
-  const triggerGameSwitch = async () => {
-    if (!currentSession) return
-    if (isZeroAddress(GAME_ROULETTE_CONTRACT)) return toast.error("GameRoulette contract not configured")
-
-    setIsRequestingNextGame(true)
-    try {
-      await saveCurrentGameState()
-
-      const callbackGasLimit = 700_000
-      const jsonProvider = new ethers.JsonRpcProvider(`https://base-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`)
-      const randomness = Randomness.createBaseSepolia(jsonProvider)
-      const [requestCallBackPrice] = await randomness.calculateRequestPriceNative(BigInt(callbackGasLimit))
-
-      const hash = await writeContractAsync({
-        address: GAME_ROULETTE_CONTRACT as `0x${string}`,
-        abi: GAME_ROULETTE_ABI as any,
-        functionName: 'requestNextGame',
-        args: [BigInt(currentSession.sessionId), callbackGasLimit],
-        value: requestCallBackPrice,
-      })
-
-      setGameSwitchEffect(true)
-      setTimeout(() => setGameSwitchEffect(false), 2000)
-      toast.success(`Requested next game. Tx: ${hash.slice(0,10)}…`)
-    } catch (error: any) {
-      console.error("Failed to request next game:", error)
-      toast.error(error?.shortMessage || error?.message || "Failed to request next game")
-    } finally {
-      setIsRequestingNextGame(false)
-    }
-  }
-  
-  // Save current game state
-  const saveCurrentGameState = async () => {
-    if (!currentSession) return
-    const currentState = gameStateRef.current.get(currentGameType)
-    if (!currentState) return
-
-    try {
-      await writeContractAsync({
-        address: GAME_ROULETTE_CONTRACT as `0x${string}`,
-        abi: GAME_ROULETTE_ABI as any,
-        functionName: 'saveGameState',
-        args: [
-          BigInt(currentSession.sessionId),
-          currentGameType,
-          BigInt(currentState.score),
-          BigInt(currentState.level),
-          BigInt(currentState.tokens),
-          "0x"
-        ],
-      })
-      setSavedGameStates(prev => new Map(prev.set(currentGameType, currentState)))
-    } catch (error) {
-      console.warn('saveGameState failed (non-fatal):', error)
-    }
-  }
-  
-  // Update session state from contract
-  const updateSessionState = (sessionData: any) => {
-    setCurrentSession({
-      sessionId: sessionData.sessionId?.toString() || "",
-      currentGame: Number(sessionData.currentGame) as GameType,
-      currentDifficulty: Number(sessionData.currentDifficulty) as DifficultyLevel,
-      isActive: Boolean(sessionData.isActive),
-      isSealed: Boolean(sessionData.isSealed),
-      sealedMultiplier: Number(sessionData.sealedMultiplier) || 100,
-      gamesPlayed: Number(sessionData.gamesPlayed) || 0,
-      totalScore: Number(sessionData.totalScore) || 0
-    })
-    setCurrentGameType(Number(sessionData.currentGame) as GameType)
-    setCurrentDifficulty(Number(sessionData.currentDifficulty) as DifficultyLevel)
-  }
   
   const getCurrentGameComponent = () => {
     switch (currentGameType) {
@@ -392,10 +368,8 @@ const GameRoulette = () => {
                   <p className="text-2xl font-bold">{currentSession.gamesPlayed}</p>
                 </div>
                 <div>
-                  <p className="text-blue-200">Multiplier</p>
-                  <p className="text-2xl font-bold">
-                    {currentSession.isSealed ? "🔐 Sealed" : `${currentSession.sealedMultiplier / 100}x`}
-                  </p>
+                  <p className="text-blue-200">Status</p>
+                  <p className="text-2xl font-bold text-green-400">🎯 Active</p>
                 </div>
               </div>
             </div>
